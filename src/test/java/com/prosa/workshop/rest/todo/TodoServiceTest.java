@@ -21,13 +21,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-/**
- * Unit tests for TodoService.
- * <p>
- * These run WITHOUT Spring context — fast, isolated, using Mockito to stub the repository.
- * <p>
- * Run with: ./gradlew test
- */
+/// Unit tests for TodoService.
+///
+/// These run WITHOUT Spring context — fast, isolated, using Mockito to stub the repository.
+///
+/// Run with: ./gradlew test
 @ExtendWith(MockitoExtension.class)
 class TodoServiceTest {
 
