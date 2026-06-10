@@ -56,7 +56,7 @@ class TodoServiceTest {
     void findAll_noFilter_returnsAllTodos() {
         when(todoRepository.findAll()).thenReturn(List.of(sampleTodo));
 
-        List<TodoDto> result = todoService.findAll(null);
+		var result = todoService.findAll(null);
 
         assertThat(result).hasSize(1);
         assertThat(result.get(0).getTitle()).isEqualTo("Buy milk");
@@ -70,7 +70,7 @@ class TodoServiceTest {
     void findAll_withStatusFilter_returnFilteredTodos() {
         when(todoRepository.findByStatus(TodoStatus.OPEN)).thenReturn(List.of(sampleTodo));
 
-        List<TodoDto> result = todoService.findAll("open");
+		var result = todoService.findAll("open");
 
         assertThat(result).hasSize(1);
         verify(todoRepository).findByStatus(TodoStatus.OPEN);
@@ -94,13 +94,13 @@ class TodoServiceTest {
     // -------------------------------------------------------------------------
     @Test
     void create_validRequest_returnsSavedDto() {
-        CreateTodoRequest request = new CreateTodoRequest();
+		var request = new CreateTodoRequest();
         request.setTitle("New task");
 
-        Todo saved = Todo.builder().id(42L).title("New task").status(TodoStatus.OPEN).build();
+		var saved = Todo.builder().id(42L).title("New task").status(TodoStatus.OPEN).build();
         when(todoRepository.save(any(Todo.class))).thenReturn(saved);
 
-        TodoDto result = todoService.create(request);
+		var result = todoService.create(request);
 
         assertThat(result.getId()).isEqualTo(42L);
         assertThat(result.getTitle()).isEqualTo("New task");
