@@ -1,7 +1,6 @@
 package com.prosa.workshop.rest.todo;
 
 import com.prosa.workshop.rest.todo.dto.CreateTodoRequest;
-import com.prosa.workshop.rest.todo.dto.TodoDto;
 import com.prosa.workshop.rest.todo.exception.ResourceNotFoundException;
 import com.prosa.workshop.rest.todo.model.Todo;
 import com.prosa.workshop.rest.todo.model.TodoStatus;
@@ -59,7 +58,7 @@ class TodoServiceTest {
 		var result = todoService.findAll(null);
 
         assertThat(result).hasSize(1);
-        assertThat(result.get(0).getTitle()).isEqualTo("Buy milk");
+        assertThat(result.getFirst().getTitle()).isEqualTo("Buy milk");
         verify(todoRepository).findAll();
     }
 
