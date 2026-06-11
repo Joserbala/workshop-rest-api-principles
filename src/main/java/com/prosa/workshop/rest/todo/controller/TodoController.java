@@ -22,16 +22,9 @@ public class TodoController {
         this.todoService = todoService;
     }
 
-    // -------------------------------------------------------------------------
-    // TODO A — GET /api/v1/todos
-    // -------------------------------------------------------------------------
-    // Return all todos. Support optional filtering via ?status=OPEN|IN_PROGRESS|DONE
-    // Response: 200 OK with a list of TodoDto (empty list [] if none found)
-    // -------------------------------------------------------------------------
     @GetMapping
-    public ResponseEntity<List<TodoDto>> getAllTodos(
-            @RequestParam(required = false) String status) {
-        return null; // TODO A: implement me
+    public ResponseEntity<List<TodoDto>> getAllTodos(@RequestParam(required = false) String status) {
+        return ResponseEntity.ok(todoService.findAll(status));
     }
 
     // -------------------------------------------------------------------------
