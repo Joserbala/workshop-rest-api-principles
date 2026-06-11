@@ -24,8 +24,6 @@ public class TodoService {
         this.todoRepository = todoRepository;
     }
 
-    // If `status` is not null, filter todos by that status.
-    // Otherwise return all todos.
     public List<TodoDto> findAll(String status) {
         if (status != null) {
             return todoRepository.findByStatus(TodoStatus.valueOf(status.toUpperCase()))
@@ -35,12 +33,6 @@ public class TodoService {
         return todoRepository.findAll().stream().map(this::toDto).toList();
     }
 
-    // -------------------------------------------------------------------------
-    // TODO 2 — findById
-    // -------------------------------------------------------------------------
-    // Find a Todo by id. If not found, throw ResourceNotFoundException.forTodo(id).
-    // Return the result mapped to a TodoDto.
-    // -------------------------------------------------------------------------
     public TodoDto findById(Long id) {
         return todoRepository.findById(id)
                 .map(this::toDto)
