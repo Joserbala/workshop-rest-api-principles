@@ -39,18 +39,9 @@ public class TodoController {
 
         return ResponseEntity.created(location).body(todoDto);
     }
-
-    // -------------------------------------------------------------------------
-    // TODO D — PUT /api/v1/todos/{id}
-    // -------------------------------------------------------------------------
-    // Full update of a todo (replace non-null fields from request body).
-    // Response: 200 OK with updated TodoDto, or 404 if not found
-    // -------------------------------------------------------------------------
     @PutMapping("/{id}")
-    public ResponseEntity<TodoDto> updateTodo(
-            @PathVariable Long id,
-            @Valid @RequestBody UpdateTodoRequest request) {
-        return null; // TODO D: implement me
+    public ResponseEntity<TodoDto> updateTodo(@PathVariable Long id, @Valid @RequestBody UpdateTodoRequest request) {
+        return ResponseEntity.ok(todoService.update(id, request));
     }
 
     // -------------------------------------------------------------------------
