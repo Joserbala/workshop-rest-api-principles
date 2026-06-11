@@ -6,6 +6,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.stream.Collectors;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -13,19 +15,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("NOT_FOUND", ex.getMessage()));
     }
 
-    // -------------------------------------------------------------------------
-    // TODO H — Handle MethodArgumentNotValidException
-    // -------------------------------------------------------------------------
-    // When @Valid fails on a request body, return 400 BAD_REQUEST with a
-    // VALIDATION_ERROR response that lists all field errors in the message.
-    //
-    // Hint: ex.getBindingResult().getFieldErrors() gives you the list of errors.
-    //       Each FieldError has .getField() and .getDefaultMessage().
-    //       Join them: "title: Title is required, dueDate: must not be null"
-    // -------------------------------------------------------------------------
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidation(MethodArgumentNotValidException ex) {
-        return null; // TODO H: implement me
+        var message = ex.getBindingResult().getFieldErrors().stream()
+                .map(e -> e.getField() + ": " + e.getDefaultMessage())
+                .collect(Collectors.joining(", "));
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("VALIDATION_ERROR", message));
     }
 
     // -------------------------------------------------------------------------
