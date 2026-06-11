@@ -27,15 +27,9 @@ public class TodoController {
         return ResponseEntity.ok(todoService.findAll(status));
     }
 
-    // -------------------------------------------------------------------------
-    // TODO B — GET /api/v1/todos/{id}
-    // -------------------------------------------------------------------------
-    // Return a single todo by its id.
-    // Response: 200 OK with the TodoDto, or 404 if not found (handled globally)
-    // -------------------------------------------------------------------------
     @GetMapping("/{id}")
     public ResponseEntity<TodoDto> getTodoById(@PathVariable Long id) {
-        return null; // TODO B: implement me
+        return ResponseEntity.ok(todoService.findById(id));
     }
 
     // -------------------------------------------------------------------------
