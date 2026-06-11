@@ -32,18 +32,12 @@ public class TodoController {
         return ResponseEntity.ok(todoService.findById(id));
     }
 
-    // -------------------------------------------------------------------------
-    // TODO C — POST /api/v1/todos
-    // -------------------------------------------------------------------------
-    // Create a new todo from the request body.
-    // Response: 201 Created with the new TodoDto AND a Location header
-    //           pointing to the new resource: /api/v1/todos/{id}
-    // -------------------------------------------------------------------------
     @PostMapping
-    public ResponseEntity<TodoDto> createTodo(
-            @Valid @RequestBody CreateTodoRequest request,
-            UriComponentsBuilder uriBuilder) {
-        return null; // TODO C: implement me
+    public ResponseEntity<TodoDto> createTodo(@Valid @RequestBody CreateTodoRequest request, UriComponentsBuilder uriBuilder) {
+        var todoDto = todoService.create(request);
+        var location = uriBuilder.path("/api/v1/todos/{id}").buildAndExpand(todoDto.getId()).toUri();
+
+        return ResponseEntity.created(location).body(todoDto);
     }
 
     // -------------------------------------------------------------------------
