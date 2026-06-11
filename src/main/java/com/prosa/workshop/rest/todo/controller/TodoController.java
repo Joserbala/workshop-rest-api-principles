@@ -39,23 +39,15 @@ public class TodoController {
 
         return ResponseEntity.created(location).body(todoDto);
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<TodoDto> updateTodo(@PathVariable Long id, @Valid @RequestBody UpdateTodoRequest request) {
         return ResponseEntity.ok(todoService.update(id, request));
     }
 
-    // -------------------------------------------------------------------------
-    // TODO E — PATCH /api/v1/todos/{id}/status
-    // -------------------------------------------------------------------------
-    // Update the status of a todo only.
-    // Example: PATCH /api/v1/todos/1/status?status=IN_PROGRESS
-    // Response: 200 OK with updated TodoDto, or 404 if not found
-    // -------------------------------------------------------------------------
     @PatchMapping("/{id}/status")
-    public ResponseEntity<TodoDto> updateStatus(
-            @PathVariable Long id,
-            @RequestParam TodoStatus status) {
-        return null; // TODO E: implement me
+    public ResponseEntity<TodoDto> updateStatus(@PathVariable Long id, @RequestParam TodoStatus status) {
+        return ResponseEntity.ok(todoService.updateStatus(id, status));
     }
 
     // -------------------------------------------------------------------------
