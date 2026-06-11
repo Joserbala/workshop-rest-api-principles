@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -21,15 +22,15 @@ public class TodoService {
         this.todoRepository = todoRepository;
     }
 
-    // -------------------------------------------------------------------------
-    // TODO 1 — findAll
-    // -------------------------------------------------------------------------
     // If `status` is not null, filter todos by that status.
     // Otherwise return all todos.
-    // Map each Todo entity to a TodoDto using toDto().
-    // -------------------------------------------------------------------------
     public List<TodoDto> findAll(String status) {
-        throw new UnsupportedOperationException("TODO 1: implement findAll");
+        if (status != null) {
+            return todoRepository.findByStatus(TodoStatus.valueOf(status.toUpperCase()))
+                    .stream().map(this::toDto).toList();
+        }
+
+        return todoRepository.findAll().stream().map(this::toDto).toList();
     }
 
     // -------------------------------------------------------------------------
