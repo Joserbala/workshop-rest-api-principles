@@ -3,6 +3,7 @@ package com.prosa.workshop.rest.todo.service;
 import com.prosa.workshop.rest.todo.dto.CreateTodoRequest;
 import com.prosa.workshop.rest.todo.dto.TodoDto;
 import com.prosa.workshop.rest.todo.dto.UpdateTodoRequest;
+import com.prosa.workshop.rest.todo.exception.ResourceNotFoundException;
 import com.prosa.workshop.rest.todo.model.Todo;
 import com.prosa.workshop.rest.todo.model.TodoStatus;
 import com.prosa.workshop.rest.todo.repository.TodoRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,7 +42,13 @@ public class TodoService {
     // Return the result mapped to a TodoDto.
     // -------------------------------------------------------------------------
     public TodoDto findById(Long id) {
-        throw new UnsupportedOperationException("TODO 2: implement findById");
+        var todo = todoRepository.findById(id);
+
+        if (todo.isPresent()) {
+            return toDto(todo.get());
+        }
+
+        throw ResourceNotFoundException.forTodo(id);
     }
 
     // -------------------------------------------------------------------------
