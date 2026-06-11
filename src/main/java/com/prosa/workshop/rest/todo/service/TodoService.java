@@ -82,14 +82,11 @@ public class TodoService {
         return toDto(todoRepository.save(todo));
     }
 
-    // -------------------------------------------------------------------------
-    // TODO 6 — delete
-    // -------------------------------------------------------------------------
-    // Find the todo by id (throw 404 if missing). Then delete it.
-    // -------------------------------------------------------------------------
     @Transactional
     public void delete(Long id) {
-        throw new UnsupportedOperationException("TODO 6: implement delete");
+        todoRepository.findById(id).orElseThrow(() -> ResourceNotFoundException.forTodo(id));
+
+        todoRepository.deleteById(id);
     }
 
     // -------------------------------------------------------------------------
