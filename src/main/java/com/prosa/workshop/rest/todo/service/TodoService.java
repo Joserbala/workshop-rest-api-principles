@@ -50,15 +50,28 @@ public class TodoService {
         return toDto(todoRepository.save(todo));
     }
 
-    // -------------------------------------------------------------------------
-    // TODO 4 — update
-    // -------------------------------------------------------------------------
-    // Find the todo by id (throw 404 if missing). Apply non-null fields from
-    // the request. Save and return the updated DTO.
-    // -------------------------------------------------------------------------
     @Transactional
     public TodoDto update(Long id, UpdateTodoRequest request) {
-        throw new UnsupportedOperationException("TODO 4: implement update");
+        var todo = todoRepository.findById(id)
+                .orElseThrow(() -> ResourceNotFoundException.forTodo(id));
+
+        if (request.getTitle() != null) {
+            todo.setTitle(request.getTitle());
+        }
+
+        if (request.getDescription() != null) {
+            todo.setDescription(request.getDescription());
+        }
+
+        if (request.getDueDate() != null) {
+            todo.setDueDate(request.getDueDate());
+        }
+
+        if (request.getStatus() != null) {
+            todo.setStatus(request.getStatus());
+        }
+
+        return toDto(todoRepository.save(todo));
     }
 
     // -------------------------------------------------------------------------
