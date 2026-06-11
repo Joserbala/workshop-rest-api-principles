@@ -1,5 +1,6 @@
 package com.prosa.workshop.rest.todo.exception;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -7,19 +8,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
-    // -------------------------------------------------------------------------
-    // TODO G — Handle ResourceNotFoundException
-    // -------------------------------------------------------------------------
-    // When a todo is not found, return 404 NOT_FOUND with an ErrorResponse.
-    //
-    // Hint:
-    //   return ResponseEntity.status(HttpStatus.NOT_FOUND)
-    //       .body(new ErrorResponse("NOT_FOUND", ex.getMessage()));
-    // -------------------------------------------------------------------------
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleNotFound(ResourceNotFoundException ex) {
-        return null; // TODO G: implement me
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("NOT_FOUND", ex.getMessage()));
     }
 
     // -------------------------------------------------------------------------
