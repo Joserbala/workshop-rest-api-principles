@@ -39,14 +39,15 @@ public class TodoService {
                 .orElseThrow(() -> ResourceNotFoundException.forTodo(id));
     }
 
-    // -------------------------------------------------------------------------
-    // TODO 3 — create
-    // -------------------------------------------------------------------------
-    // Build a new Todo entity from the request, save it, and return the DTO.
-    // -------------------------------------------------------------------------
     @Transactional
     public TodoDto create(CreateTodoRequest request) {
-        throw new UnsupportedOperationException("TODO 3: implement create");
+        var todo = Todo.builder()
+                .title(request.getTitle())
+                .description(request.getDescription())
+                .dueDate(request.getDueDate())
+                .build();
+
+        return toDto(todoRepository.save(todo));
     }
 
     // -------------------------------------------------------------------------
