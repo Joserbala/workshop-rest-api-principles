@@ -42,13 +42,9 @@ public class TodoService {
     // Return the result mapped to a TodoDto.
     // -------------------------------------------------------------------------
     public TodoDto findById(Long id) {
-        var todo = todoRepository.findById(id);
-
-        if (todo.isPresent()) {
-            return toDto(todo.get());
-        }
-
-        throw ResourceNotFoundException.forTodo(id);
+        return todoRepository.findById(id)
+                .map(this::toDto)
+                .orElseThrow(() -> ResourceNotFoundException.forTodo(id));
     }
 
     // -------------------------------------------------------------------------
