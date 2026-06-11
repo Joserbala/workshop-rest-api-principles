@@ -52,8 +52,7 @@ public class TodoService {
 
     @Transactional
     public TodoDto update(Long id, UpdateTodoRequest request) {
-        var todo = todoRepository.findById(id)
-                .orElseThrow(() -> ResourceNotFoundException.forTodo(id));
+        var todo = todoRepository.findById(id).orElseThrow(() -> ResourceNotFoundException.forTodo(id));
 
         if (request.getTitle() != null) {
             todo.setTitle(request.getTitle());
@@ -74,14 +73,13 @@ public class TodoService {
         return toDto(todoRepository.save(todo));
     }
 
-    // -------------------------------------------------------------------------
-    // TODO 5 — updateStatus
-    // -------------------------------------------------------------------------
-    // Find the todo by id (throw 404 if missing). Set its status. Return DTO.
-    // -------------------------------------------------------------------------
     @Transactional
     public TodoDto updateStatus(Long id, TodoStatus newStatus) {
-        throw new UnsupportedOperationException("TODO 5: implement updateStatus");
+        var todo = todoRepository.findById(id).orElseThrow(() -> ResourceNotFoundException.forTodo(id));
+
+        todo.setStatus(newStatus);
+
+        return toDto(todoRepository.save(todo));
     }
 
     // -------------------------------------------------------------------------
